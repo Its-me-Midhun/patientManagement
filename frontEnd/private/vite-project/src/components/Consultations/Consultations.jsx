@@ -67,19 +67,46 @@ const ConsultationForm = () => {
 
   const onSubmit = async (values) => {
     console.log(values);
-    // dispatch(setConsultationData(values, navigate));
     await window.ethereum.request({ method: 'eth_requestAccounts' });
     const web3 = new Web3(window.ethereum);
     const accounts = await web3.eth.getAccounts();
     const netVer = await web3.eth.net.getId();
-    localStorage.setItem('walletAddress', accounts[0]);
-    const wrapper = await wrappedTokenDeposit({
-      web3,
-      address: accounts[0],
-      netVer,
-    });
+    // localStorage.setItem('walletAddress', accounts[0]);
+    // const wrapper = await wrappedTokenDeposit({
+    //   web3,
+    //   address: accounts[0],
+    //   netVer,
+    // });
+    const tokenAddress = '0x72d46adf628719E83c67D1a3b91743f382355308';
 
-    console.log('wrappedTokenWithdraw', loader);
+    const toWei = async (web3, amount, decimals) => {
+      return await web3.utils.toWei(
+        parseFloat(amount).toFixed(decimals).toString(),
+        'ether'
+      );
+    };
+
+    const getGasPrice = async (web3) => {
+      const gasPrice = await web3.eth.getGasPrice();
+      return web3.utils.toBN(gasPrice).add(web3.utils.toBN('20000000000'));
+    };
+
+    const AmountInWei = await toWei(web3, 0.001, 18);
+    console.log('AmountInWei', AmountInWei);
+    const GetGasPricesss = await getGasPrice(web3);
+    const result = await web3.eth.sendTransaction({
+      from: accounts[0],
+      to: tokenAddress,
+      value: AmountInWei,
+      GetGasPricesss,
+    });
+    console.log('result', result);
+    if (result) {
+      dispatch(setConsultationData(values, navigate));
+    } else {
+      console.log('error');
+    }
+    // console.log('wrappedTokenWithdraw', loader);
     // Perform submission logic here
   };
 
