@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Formik, Field, Form, ErrorMessage, useFormikContext } from 'formik';
 import * as Yup from 'yup';
-import './Medicalinfo.css';
+// import './Medicalinfo.css';
 
 const MedicalInfoForm = () => {
   const [diseaseSections, setDiseaseSections] = useState([{}]);
@@ -55,14 +55,26 @@ const MedicalInfoForm = () => {
       >
         <Form>
           <div className="form-section">
-            <h2 className="form-section-header">Personal Information</h2>
-            <div className="form-row">
+            <div
+              className="form-row "
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                height: '93px',
+              }}
+            >
               <label htmlFor="blood">Blood Type:</label>
               <Field
                 type="text"
                 id="blood"
                 name="blood"
+                placeholder="Enter Blood Group"
                 className="text-input"
+                style={{
+                  width: '200%',
+                  backgroundColor: 'black',
+                  border: '1px solid #6c63ff',
+                }}
               />
               <ErrorMessage
                 name="blood"
@@ -70,13 +82,26 @@ const MedicalInfoForm = () => {
                 className="error-message"
               />
             </div>
-            <div className="form-row">
+            <div
+              className="form-row"
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                height: '93px',
+              }}
+            >
               <label htmlFor="height">Height:</label>
               <Field
                 type="text"
                 id="height"
+                placeholder="Enter height"
                 name="height"
                 className="text-input"
+                style={{
+                  width: '200%',
+                  backgroundColor: 'black',
+                  border: '1px solid #6c63ff',
+                }}
               />
               <ErrorMessage
                 name="height"
@@ -84,13 +109,26 @@ const MedicalInfoForm = () => {
                 className="error-message"
               />
             </div>
-            <div className="form-row">
+            <div
+              className="form-row"
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                height: '93px',
+              }}
+            >
               <label htmlFor="weight">Weight:</label>
               <Field
                 type="text"
                 id="weight"
                 name="weight"
+                placeholder="Enter Weight"
                 className="text-input"
+                style={{
+                  width: '200%',
+                  backgroundColor: 'black',
+                  border: '1px solid #6c63ff',
+                }}
               />
               <ErrorMessage
                 name="weight"
@@ -98,13 +136,26 @@ const MedicalInfoForm = () => {
                 className="error-message"
               />
             </div>
-            <div className="form-row">
+            <div
+              className="form-row"
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                height: '93px',
+              }}
+            >
               <label htmlFor="gender">Gender:</label>
               <Field
                 as="select"
                 id="gender"
+                placeholder="Enter Gender"
                 name="gender"
                 className="text-input"
+                style={{
+                  width: '200%',
+                  backgroundColor: 'black',
+                  border: '1px solid #6c63ff',
+                }}
               >
                 <option value="">Select Gender</option>
                 <option value="male">Male</option>
@@ -119,7 +170,18 @@ const MedicalInfoForm = () => {
             </div>
           </div>
 
-          <button type="submit" className="submit-button">
+          <button
+            type="submit"
+            className="button"
+            style={{
+              backgroundColor: '#6c63ff',
+              margin: '0% 0% 0% 1%',
+              margin: '11% 0% 0% 0%',
+              height: '6vh',
+              borderRadius: '10px',
+              width: '100%',
+            }}
+          >
             Submit
           </button>
         </Form>

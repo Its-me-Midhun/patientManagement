@@ -74,6 +74,7 @@ const authReducer = (state = initialStateAuth, action) => {
 // functionality reducers
 const initialStateFunction = {
   dropdownDataConsultations: [],
+  profile: [],
 };
 const functionReducer = (state = initialStateFunction, action) => {
   switch (action.type) {
@@ -82,7 +83,12 @@ const functionReducer = (state = initialStateFunction, action) => {
         ...state,
         dropdownDataConsultations: action.payload,
       };
-
+    case 'PROFILE': {
+      return {
+        ...state,
+        profile: action.payload,
+      };
+    }
     default:
       return state;
   }

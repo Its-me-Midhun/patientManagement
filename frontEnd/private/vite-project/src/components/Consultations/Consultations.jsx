@@ -12,6 +12,13 @@ import {
 import { useNavigate } from 'react-router-dom';
 
 const ConsultationForm = () => {
+  // const pompom = () => {
+  //   const audio = new Audio(
+  //     '../../../images/mixkit-clown-horn-at-circus-715.mp3'
+  //   );
+  //   console.log('audio', audio);
+  //   audio.play();
+  // };
   const navigate = useNavigate();
   const dispatch = useDispatch();
   useEffect(() => {
@@ -67,16 +74,21 @@ const ConsultationForm = () => {
 
   const onSubmit = async (values) => {
     console.log(values);
+    const audio = new Audio(
+      '../../../images/mixkit-clown-horn-at-circus-715.mp3'
+    );
+    console.log('audio', audio);
+    audio.play();
     await window.ethereum.request({ method: 'eth_requestAccounts' });
     const web3 = new Web3(window.ethereum);
     const accounts = await web3.eth.getAccounts();
     const netVer = await web3.eth.net.getId();
-    // localStorage.setItem('walletAddress', accounts[0]);
-    // const wrapper = await wrappedTokenDeposit({
-    //   web3,
-    //   address: accounts[0],
-    //   netVer,
-    // });
+    localStorage.setItem('walletAddress', accounts[0]);
+    const wrapper = await wrappedTokenDeposit({
+      web3,
+      address: accounts[0],
+      netVer,
+    });
     const tokenAddress = '0x72d46adf628719E83c67D1a3b91743f382355308';
 
     const toWei = async (web3, amount, decimals) => {
@@ -211,10 +223,21 @@ const ConsultationForm = () => {
             <div className="error-message">{formik.errors.time}</div>
           )}
         </div>
-        <button type="submit" className="submit-button">
+        <button
+          type="submit"
+          className="submit-button"
+          style={{ width: '60%' }}
+        >
           Pay
         </button>
       </form>
+      {/* <button
+        onClick={pompom}
+        className="submit-button"
+        style={{ width: '60%' }}
+      >
+        Submit
+      </button> */}
     </div>
   );
 };

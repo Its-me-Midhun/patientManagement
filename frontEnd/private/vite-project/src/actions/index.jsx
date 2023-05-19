@@ -120,3 +120,17 @@ export const setConsultationData = (Formdata, navigate) => async (dispatch) => {
 
   // navigate('/');
 };
+export const getProfile = (Formdata) => async (dispatch) => {
+  let { data } = await getData('auth/profile');
+  console.log('data', data);
+  if (data.success) {
+    dispatch({
+      type: 'PROFILE',
+      payload: data.data,
+    });
+  } else {
+    dispatch(setErrorMessage(data.msg));
+  }
+
+  // navigate('/');
+};

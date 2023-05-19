@@ -135,6 +135,13 @@ const wrappedTokenDeposit = async ({
     console.log('event', event.returnValues);
   });
 
+  const resultofverification = await smartContract.methods
+    .verifyCertificateByPatientUUID(patientUUID)
+    .call();
+  console.log(
+    'resultofverification',
+    web3.utils.hexToUtf8(resultofverification.departmentName)
+  );
   // const certificatebyUuid =
   //   smartContract.methods.verifyCertificateByPatientUUID(
   //     '0x3132330000000000000000000000000000000000000000000000000000000000'

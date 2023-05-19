@@ -146,3 +146,28 @@ exports.reset = async (req, res) => {
   }
 };
 
+exports.getPatientProfile = async (req, res) => {
+  try {
+    const token = req.header('Authorization')
+      ? req.header('Authorization').replace('Bearer ', '')
+      : null;
+    console.log('token', token);
+    const decoded = jwt.decode(token);
+    console.log('decoded', decoded);
+    const decodedemail = decoded.email;
+    const loginData = await login.findOne({ email: decodedemail });
+    console.log('loginData', loginData);
+    const patientProfileData = await signup
+      .findOne({ loginId: loginData._id })
+      .populate('loginId');
+    res.json({
+      success: true,
+      data: patientProfileData,
+    });
+  } catch (e) {
+    res.json({
+      success: false,
+      msg: e.message,
+    });
+  }
+};

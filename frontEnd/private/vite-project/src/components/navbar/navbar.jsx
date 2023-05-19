@@ -67,16 +67,6 @@ const Navbar = () => {
           Dashboard
         </Link>
         <Link
-          to="/healthinfo"
-          style={{
-            margin: '0% 0% 0% 70px',
-            textDecoration: 'none',
-            color: 'white',
-          }}
-        >
-          Medical Info
-        </Link>{' '}
-        <Link
           to="/vaccine"
           style={{
             margin: '0% 0% 0% 70px',
