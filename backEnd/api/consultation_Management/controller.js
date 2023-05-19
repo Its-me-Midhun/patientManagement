@@ -64,9 +64,35 @@ exports.addconsultation = async (req, res) => {
 
 exports.getDepartmentHospitalDoctor = async (req, res) => {
   try {
+    const token = req.header('Authorization')
+      ? req.header('Authorization').replace('Bearer ', '')
+      : null;
+    console.log('token', token);
+    const decoded = jwt.decode(token);
+    console.log('decoded', decoded);
+    const decodedemail = decoded.email;
+    const loginData = await login.findOne({ email: decodedemail });
+    console.log('loginData', loginData);
     const dataDepartment = await department.find();
     const dataHospital = await hospital.find();
-    const dataDoctor = await doctor.find();
+    const dataDoctor = await doctor.aggregate([
+      {
+        $lookup: {
+          from: 'hospitals',
+          localField: 'hospitalId',
+          foreignField: 'hospitalId',
+          as: 'hospital_details',
+        },
+      },
+      {
+        $lookup: {
+          from: 'departments',
+          localField: 'departmentId',
+          foreignField: 'departmentId',
+          as: 'department_details',
+        },
+      },
+    ]);
     res.json({
       success: true,
       data: { dataDepartment, dataHospital, dataDoctor },

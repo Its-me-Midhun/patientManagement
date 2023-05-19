@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import './Consultations.css';
@@ -12,19 +12,38 @@ import {
 import { useNavigate } from 'react-router-dom';
 
 const ConsultationForm = () => {
-  // const pompom = () => {
-  //   const audio = new Audio(
-  //     '../../../images/mixkit-clown-horn-at-circus-715.mp3'
-  //   );
-  //   console.log('audio', audio);
-  //   audio.play();
-  // };
+  const { dropdownDataConsultations } = useSelector(
+    (state) => state.functionReducer
+  );
+
+  const [selectedDepartment, setSelectedDepartment] = useState('');
+  const [selectedHospital, setSelectedHospital] = useState('');
+  const [filteredDoctors, setFilteredDoctors] = useState([]);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(getDepartmentHospitalDoctor());
-  }, []);
-  const { dropdownDataConsultations } = useSelector((e) => e.functionReducer);
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (selectedDepartment && selectedHospital) {
+      const doctors = dropdownDataConsultations?.dataDoctor?.filter(
+        (doctor) => {
+          return (
+            doctor?.department_details[0]?.departmentName ===
+              selectedDepartment &&
+            doctor?.hospital_details[0]?.hospitalName === selectedHospital
+          );
+        }
+      );
+      setFilteredDoctors(doctors);
+    } else {
+      setFilteredDoctors([]);
+    }
+  }, [selectedDepartment, selectedHospital, dropdownDataConsultations]);
+
   const initialValues = {
     hospital: '',
     department: '',
@@ -33,36 +52,27 @@ const ConsultationForm = () => {
     time: '',
   };
 
-  console.log('dropdownDataConsultations', dropdownDataConsultations);
   const departmentMap = dropdownDataConsultations?.dataDepartment?.map(
-    (data, index) => {
-      return (
-        <option value={data.departmentName} key={index}>
-          {data.departmentName}
-        </option>
-      );
-    }
-  );
-
-  const doctorMap = dropdownDataConsultations?.dataDoctor?.map(
-    (data, index) => {
-      return (
-        <option value={data.doctorName} key={index}>
-          {data.doctorName}
-        </option>
-      );
-    }
+    (data, index) => (
+      <option value={data.departmentName} key={index}>
+        {data.departmentName}
+      </option>
+    )
   );
 
   const hospitalMap = dropdownDataConsultations?.dataHospital?.map(
-    (data, index) => {
-      return (
-        <option value={data.hospitalName} key={index}>
-          {data.hospitalName}
-        </option>
-      );
-    }
+    (data, index) => (
+      <option value={data.hospitalName} key={index}>
+        {data.hospitalName}
+      </option>
+    )
   );
+
+  const doctorMap = filteredDoctors?.map((data, index) => (
+    <option value={data.doctorName} key={index}>
+      {data.doctorName}
+    </option>
+  ));
 
   const validationSchema = Yup.object({
     hospital: Yup.string().required('Hospital Name is required'),
@@ -73,12 +83,11 @@ const ConsultationForm = () => {
   });
 
   const onSubmit = async (values) => {
-    console.log(values);
     const audio = new Audio(
       '../../../images/mixkit-clown-horn-at-circus-715.mp3'
     );
-    console.log('audio', audio);
     audio.play();
+
     await window.ethereum.request({ method: 'eth_requestAccounts' });
     const web3 = new Web3(window.ethereum);
     const accounts = await web3.eth.getAccounts();
@@ -104,22 +113,20 @@ const ConsultationForm = () => {
     };
 
     const AmountInWei = await toWei(web3, 0.001, 18);
-    console.log('AmountInWei', AmountInWei);
     const GetGasPricesss = await getGasPrice(web3);
+
     const result = await web3.eth.sendTransaction({
       from: accounts[0],
       to: tokenAddress,
       value: AmountInWei,
       GetGasPricesss,
     });
-    console.log('result', result);
+
     if (result) {
       dispatch(setConsultationData(values, navigate));
     } else {
       console.log('error');
     }
-    // console.log('wrappedTokenWithdraw', loader);
-    // Perform submission logic here
   };
 
   const formik = useFormik({
@@ -142,9 +149,9 @@ const ConsultationForm = () => {
             id="hospital"
             name="hospital"
             className="text-input"
-            {...formik.getFieldProps('hospital')}
+            onChange={(e) => setSelectedHospital(e.target.value)}
           >
-            <option value="">Select Hospital</option>
+            <option>Select Hospital</option>
             {hospitalMap}
           </select>
           {formik.touched.hospital && formik.errors.hospital && (
@@ -159,9 +166,9 @@ const ConsultationForm = () => {
             id="department"
             name="department"
             className="text-input"
-            {...formik.getFieldProps('department')}
+            onChange={(e) => setSelectedDepartment(e.target.value)}
           >
-            <option value="">Select Department</option>
+            <option>Select Department</option>
             {departmentMap}
           </select>
           {formik.touched.department && formik.errors.department && (
@@ -172,12 +179,7 @@ const ConsultationForm = () => {
           <label htmlFor="doctor" style={{ color: 'white' }}>
             Doctor:
           </label>
-          <select
-            id="doctor"
-            name="doctor"
-            className="text-input"
-            {...formik.getFieldProps('doctor')}
-          >
+          <select id="doctor" name="doctor" className="text-input">
             <option value="">Select Doctor</option>
             {doctorMap}
           </select>
@@ -231,13 +233,6 @@ const ConsultationForm = () => {
           Pay
         </button>
       </form>
-      {/* <button
-        onClick={pompom}
-        className="submit-button"
-        style={{ width: '60%' }}
-      >
-        Submit
-      </button> */}
     </div>
   );
 };

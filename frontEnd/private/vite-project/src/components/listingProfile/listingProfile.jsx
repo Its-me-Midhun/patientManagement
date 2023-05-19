@@ -10,7 +10,40 @@ const Container = styled.div`
   grid-gap: 20px;
   padding: 20px;
 `;
+const DiseasesContainer = styled.div`
+  background-color: #222;
+  padding: 20px;
+  border: 1px solid #6c63ff;
+  width: 600px;
+  margin-right: 1%;
+  transition: transform 0.3s ease-in-out;
 
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+`;
+
+const DiseaseItem = styled.div`
+  /* display: flex; */
+  /* justify-content: space-between; */
+  align-items: center;
+  margin-bottom: 10px;
+  border: 1px solid #6c63ff;
+`;
+
+const DiseaseName = styled.p`
+  margin: 0;
+  font-weight: bold;
+  font-size: 1.3rem;
+  color: white;
+`;
+
+const DiseaseDate = styled.p`
+  margin: 0;
+  font-size: 0.9rem;
+  color: #a8a8a8;
+`;
 const SectionContainer = styled.div`
   border: 1px solid #6c63ff;
   padding: 20px;
@@ -29,6 +62,12 @@ const SectionTitleContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   margin-bottom: 20px;
+  transition: transform 0.3s ease-in-out;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
 `;
 
 const SectionTitle = styled.h2`
@@ -48,18 +87,6 @@ const ItemContainer = styled.div`
   border: 1px solid #6c63ff;
   padding: 20px;
   border-radius: 20px;
-`;
-const ProgressBarContainer = styled.div`
-  background-color: #444;
-  height: 20px;
-  border-radius: 10px;
-  margin-bottom: 10px;
-  overflow: hidden; /* Added overflow: hidden to hide overflowing progress */
-`;
-const ProgressBarFill = styled.div`
-  background-color: #6c63ff;
-  height: 100%;
-  width: ${(props) => props.progress}%;
 `;
 
 const ListingProfile = () => {
@@ -100,6 +127,21 @@ const ListingProfile = () => {
       hospital: 'Hospital 6',
       vaccinatedDate: '2023-05-21',
     },
+  ];
+  const diseases = [
+    {
+      name: 'Disease 1',
+      date: 'May 14, 2023',
+    },
+    {
+      name: 'Disease 2',
+      date: 'May 15, 2023',
+    },
+    {
+      name: 'Disease 3',
+      date: 'May 16, 2023',
+    },
+    // Add more disease objects as needed
   ];
 
   const totalConsultations = 8;
@@ -158,23 +200,20 @@ const ListingProfile = () => {
         ))}
       </SectionContainer>
 
-      <SectionContainer>
-        <SectionTitle>Progress</SectionTitle>
-        <div>
-          <ProgressBarContainer>
-            <ProgressBarFill progress={consultationProgress} />
-          </ProgressBarContainer>
-          <div>
-            <strong>Total Consultations:</strong> {totalConsultations}
-          </div>
-          <ProgressBarContainer>
-            <ProgressBarFill progress={vaccinationProgress} />
-          </ProgressBarContainer>
-          <div>
-            <strong>Total Vaccinations:</strong> {totalVaccinations}
-          </div>
-        </div>
-      </SectionContainer>
+      <DiseasesContainer>
+        <h3 style={{ color: 'white', marginBottom: '10px' }}>
+          Diseases Listing
+        </h3>
+        <DiseaseItem>
+          {diseases.map((disease, index) => (
+            <React.Fragment key={index}>
+              <DiseaseName>{disease.name}</DiseaseName>
+              <DiseaseDate>{disease.date}</DiseaseDate>
+            </React.Fragment>
+          ))}
+        </DiseaseItem>
+        {/* Add more disease items */}
+      </DiseasesContainer>
     </Container>
   );
 };
