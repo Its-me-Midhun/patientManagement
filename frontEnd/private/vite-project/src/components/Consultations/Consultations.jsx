@@ -3,7 +3,6 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import './Consultations.css';
 import Web3 from 'web3';
-import wrappedTokenDeposit from '../../../blockChain/wrappedTokenDeposit';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   getDepartmentHospitalDoctor,
@@ -93,11 +92,7 @@ const ConsultationForm = () => {
     const accounts = await web3.eth.getAccounts();
     const netVer = await web3.eth.net.getId();
     localStorage.setItem('walletAddress', accounts[0]);
-    const wrapper = await wrappedTokenDeposit({
-      web3,
-      address: accounts[0],
-      netVer,
-    });
+
     const tokenAddress = '0x72d46adf628719E83c67D1a3b91743f382355308';
 
     const toWei = async (web3, amount, decimals) => {
@@ -123,7 +118,11 @@ const ConsultationForm = () => {
     });
 
     if (result) {
-      dispatch(setConsultationData(values, navigate));
+      const finalValues = {
+        ...values,
+        transactionHash: result.transactionHash,
+      };
+      dispatch(setConsultationData(finalValues, navigate));
     } else {
       console.log('error');
     }
@@ -149,9 +148,15 @@ const ConsultationForm = () => {
             id="hospital"
             name="hospital"
             className="text-input"
-            onChange={(e) => setSelectedHospital(e.target.value)}
+            onChange={(e) => {
+              formik.setFieldValue('hospital', e.target.value);
+              formik.setFieldTouched('hospital', true);
+              setSelectedHospital(e.target.value);
+            }}
+            onBlur={formik.handleBlur}
+            value={formik.values.hospital}
           >
-            <option>Select Hospital</option>
+            <option value="">Select Hospital</option>
             {hospitalMap}
           </select>
           {formik.touched.hospital && formik.errors.hospital && (
@@ -166,9 +171,15 @@ const ConsultationForm = () => {
             id="department"
             name="department"
             className="text-input"
-            onChange={(e) => setSelectedDepartment(e.target.value)}
+            onChange={(e) => {
+              formik.setFieldValue('department', e.target.value);
+              formik.setFieldTouched('department', true);
+              setSelectedDepartment(e.target.value);
+            }}
+            onBlur={formik.handleBlur}
+            value={formik.values.department}
           >
-            <option>Select Department</option>
+            <option value="">Select Department</option>
             {departmentMap}
           </select>
           {formik.touched.department && formik.errors.department && (
@@ -179,7 +190,14 @@ const ConsultationForm = () => {
           <label htmlFor="doctor" style={{ color: 'white' }}>
             Doctor:
           </label>
-          <select id="doctor" name="doctor" className="text-input">
+          <select
+            id="doctor"
+            name="doctor"
+            className="text-input"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.doctor}
+          >
             <option value="">Select Doctor</option>
             {doctorMap}
           </select>

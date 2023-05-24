@@ -154,11 +154,11 @@ exports.getPatientProfile = async (req, res) => {
     console.log('token', token);
     const decoded = jwt.decode(token);
     console.log('decoded', decoded);
-    const decodedemail = decoded.email;
+    const decodedemail = decoded?.email;
     const loginData = await login.findOne({ email: decodedemail });
     console.log('loginData', loginData);
     const patientProfileData = await signup
-      .findOne({ loginId: loginData._id })
+      .findOne({ loginId: loginData?._id })
       .populate('loginId');
     res.json({
       success: true,
@@ -168,6 +168,40 @@ exports.getPatientProfile = async (req, res) => {
     res.json({
       success: false,
       msg: e.message,
+    });
+  }
+};
+
+exports.GetProfile = async (req, res) => {
+  try {
+    const decoded = await jwt.verify(req.body.token, 'MIDHUNMOHAN');
+    console.log('decodeddsfsdfsdfsdf', decoded);
+    if (!decoded) {
+      return ErrorMessage(res, 'Invalid Token');
+    }
+    if (decoded.exp < Date.now()) {
+      return ErrorMessage(res, 'Token Expired');
+    }
+
+    const isUserExists = await login.findOne({ _id: decoded.id });
+    if (!isUserExists) {
+      return ErrorMessage(res, 'Access Denied');
+    }
+    let matchvalidity = isUserExists.password
+      .concat(isUserExists.id)
+      .concat(isUserExists.email);
+
+    if (matchvalidity != decoded.validity) {
+      return ErrorMessage(res, 'Access Denied');
+    }
+    res.json({
+      success: true,
+    });
+  } catch (error) {
+    console.log('error', error);
+    res.json({
+      success: false,
+      msg: error.message,
     });
   }
 };

@@ -1,4 +1,4 @@
-.medical-info-form {
+/* .medical-info-form {
   margin: 0 auto;
   padding: 20px;
   background-color: #222;
@@ -83,4 +83,18 @@
   font-size: 16px;
   width: 59%;
   cursor: pointer;
+} */
+
+.modal-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 130%;
+  pointer-events: auto;
+  background-color: #222;
+  background-clip: padding-box;
+  border-radius: var(--bs-modal-border-radius);
+  outline: 0;
+  border: 1px solid #6c63ff;
+  color: white;
 }

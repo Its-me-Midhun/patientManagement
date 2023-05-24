@@ -1,6 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import {
+  getConsultationsWithLogin,
+  getVaccinationWithLogin,
+} from '../../actions';
 
 const Container = styled.div`
   background-color: #222;
@@ -90,6 +95,17 @@ const ItemContainer = styled.div`
 `;
 
 const ListingProfile = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getConsultationsWithLogin());
+  }, []);
+  useEffect(() => {
+    dispatch(getVaccinationWithLogin());
+  }, []);
+  const { consultationsByLoginId, vaccinationsByLoginId } = useSelector(
+    (state) => state.functionReducer
+  );
+  console.log('vaccinationsByLoginId', vaccinationsByLoginId);
   const consultations = [
     {
       hospital: 'Hospital 1',
@@ -163,13 +179,16 @@ const ListingProfile = () => {
             </Link>
           </button>
         </SectionTitleContainer>
-        {consultations.map((consultation, index) => (
+        {consultationsByLoginId.map((consultation, index) => (
           <ItemContainer key={index}>
-            <strong>Hospital:</strong> {consultation.hospital}
+            <strong>Hospital:</strong>
+            {consultation?.hospital_details[0]?.hospitalName}
             <br />
-            <strong>Department:</strong> {consultation.department}
+            <strong>Department:</strong>{' '}
+            {consultation?.department_details[0]?.departmentName}
             <br />
-            <strong>Doctor:</strong> {consultation.doctor}
+            <strong>Doctor:</strong>{' '}
+            {consultation?.doctor_details[0]?.doctorName}
             <br />
             <strong>Time:</strong> {consultation.time}
           </ItemContainer>
@@ -189,13 +208,15 @@ const ListingProfile = () => {
           </button>
         </SectionTitleContainer>
 
-        {vaccinations.map((vaccination, index) => (
+        {vaccinationsByLoginId?.map((vaccination, index) => (
           <ItemContainer key={index}>
-            <strong>Vaccine:</strong> {vaccination.vaccine}
+            <strong>Vaccine:</strong> {vaccination?.vaccine_details[0]?.name}
             <br />
-            <strong>Hospital:</strong> {vaccination.hospital}
+            <strong>Hospital:</strong>{' '}
+            {vaccination?.hospital_details[0]?.hospitalName}
             <br />
-            <strong>Vaccinated Date:</strong> {vaccination.vaccinatedDate}
+            <strong>Vaccinated Date:</strong>{' '}
+            {vaccination.date.split('T00:00:00.000Z')}
           </ItemContainer>
         ))}
       </SectionContainer>

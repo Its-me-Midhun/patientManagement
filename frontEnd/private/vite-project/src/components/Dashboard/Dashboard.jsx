@@ -1,5 +1,7 @@
 import React from 'react';
 import './Dashboard.css';
+import { Link } from 'react-router-dom';
+
 import {
   LineChart,
   Line,
@@ -37,6 +39,12 @@ const Dashboard = () => {
     // Add more data points for each month
   ];
 
+  // Calculate the total count of vaccinations taken
+  const totalVaccinations = data.reduce(
+    (sum, month) => sum + month.vaccinations,
+    0
+  );
+
   return (
     <div className="dashboard-container">
       <div className="cards-container">
@@ -54,7 +62,7 @@ const Dashboard = () => {
         </div>
         <div className="card">
           <h3>Vaccinations Taken</h3>
-          <p>{data[0].vaccinations}</p>
+          <p>{totalVaccinations}</p>
         </div>
       </div>
       <div className="chart-container">
@@ -72,18 +80,45 @@ const Dashboard = () => {
         </LineChart>
       </div>
       <div className="history-container">
-        <h2 style={{ fontSize: '3rem' }}>Previous History</h2>
+        <h2 style={{ fontSize: '3rem', borderBottom: '6px solid #6c63ff' }}>
+          Previous History
+        </h2>
         <div className="history-item">
           <p>Vaccinations Taken</p>
-          <p>May 15, 2023</p>
+          <p>{totalVaccinations}</p>
+          <button className="history-button">
+            {' '}
+            <Link
+              to="/profile"
+              style={{ color: 'white', textDecoration: 'none' }}
+            >
+              View&nbsp;in&nbsp;profile
+            </Link>
+          </button>
         </div>
         <div className="history-item">
           <p>Disease Name</p>
-          <p>May 14, 2023</p>
+          <p>{totalVaccinations}</p>
+          <button className="history-button">
+            <Link
+              to="/profile"
+              style={{ color: 'white', textDecoration: 'none' }}
+            >
+              View&nbsp;in&nbsp;profile
+            </Link>
+          </button>
         </div>
         <div className="history-item">
-          <p>Vaccinations Taken</p>
-          <p>May 13, 2023</p>
+          <p>Consultations Taken</p>
+          <p>{totalVaccinations}</p>
+          <button className="history-button">
+            <Link
+              to="/profile"
+              style={{ color: 'white', textDecoration: 'none' }}
+            >
+              View&nbsp;in&nbsp;profile
+            </Link>
+          </button>
         </div>
       </div>
     </div>

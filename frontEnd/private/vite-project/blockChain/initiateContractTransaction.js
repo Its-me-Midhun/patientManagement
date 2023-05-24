@@ -49,7 +49,7 @@ const initiateContractTransaction = async ({
 
   const transactionInput = {
     from: address,
-    // value: amount, 
+    // value: amount,
     // gasPrice: gasPrice,
   };
 

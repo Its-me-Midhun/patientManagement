@@ -182,3 +182,47 @@
     max-width: 400px;
   }
 }
+
+.verification-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: black;
+}
+
+.verification-field {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+  margin-top: 2%;
+}
+
+.verification-field h1 {
+  color: #6c63ff;
+  /* font-size: 1.5rem; */
+  margin-bottom: 10px;
+}
+
+.verification-field input {
+  padding: 10px;
+  border: none;
+  background-color: #222;
+  border-radius: 10px;
+  color: white;
+  margin-bottom: 10px;
+  border: 2px solid #6c63ff;
+}
+
+.verification-field button {
+  padding: 10px 20px;
+  border: none;
+  background-color: #6c63ff;
+  color: white;
+  cursor: pointer;
+}
+
+.verification-field button:hover {
+  background-color: #524ccc;
+}

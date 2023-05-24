@@ -43,7 +43,7 @@ const SignupPage = () => {
       pinCode: '',
       country: '',
       state: '',
-      role: '',
+      role: 'patient',
     },
     validationSchema,
     onSubmit: (values) => {
@@ -267,8 +267,9 @@ const SignupPage = () => {
             id="role"
             name="role"
             className="input-field"
-            value={formik.values.role}
+            defaultValue="patient"
             placeholder="Enter Role"
+            disabled="true"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
           />

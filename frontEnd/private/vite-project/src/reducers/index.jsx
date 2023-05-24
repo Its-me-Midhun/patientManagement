@@ -66,6 +66,7 @@ const authReducer = (state = initialStateAuth, action) => {
         ...state,
         role: null,
       };
+
     default:
       return state;
   }
@@ -75,6 +76,15 @@ const authReducer = (state = initialStateAuth, action) => {
 const initialStateFunction = {
   dropdownDataConsultations: [],
   profile: [],
+  allconsultations: [],
+  consultationsById: [],
+  success: null,
+  consultationDataById: [],
+  vaccinationDropdown: [],
+  allvaccinations: [],
+  vaccinationDataById: [],
+  consultationsByLoginId: [],
+  vaccinationsByLoginId: [],
 };
 const functionReducer = (state = initialStateFunction, action) => {
   switch (action.type) {
@@ -87,6 +97,50 @@ const functionReducer = (state = initialStateFunction, action) => {
       return {
         ...state,
         profile: action.payload,
+      };
+    }
+    case 'ALL_CONSULTATIONS': {
+      return {
+        ...state,
+        allconsultations: action.payload,
+      };
+    }
+    case 'CONSULTATIONS_BY_LOGIN_ID': {
+      return {
+        ...state,
+        consultationsByLoginId: action.payload,
+      };
+    }
+    case 'VACCINATION_BY_LOGIN_ID': {
+      return {
+        ...state,
+        vaccinationsByLoginId: action.payload,
+      };
+    }
+    case 'ALL_VACCINATIONS': {
+      return {
+        ...state,
+        allvaccinations: action.payload,
+      };
+    }
+    case 'CONSULTATIONS_BY_ID': {
+      return {
+        ...state,
+        consultationsById: action.payload,
+        success: action.successStatus,
+        consultationDataById: action.consultationData,
+      };
+    }
+    case 'VACCINATIONS_BY_ID': {
+      return {
+        ...state,
+        vaccinationDataById: action.payload,
+      };
+    }
+    case 'FETCH_DATA_VACCINATION': {
+      return {
+        ...state,
+        vaccinationDropdown: action.payload,
       };
     }
     default:

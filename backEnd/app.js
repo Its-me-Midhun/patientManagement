@@ -23,7 +23,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 
-app.use('/', indexRouter);
+// app.use('/', indexRouter);
+app.all('/*', [require('./middleware/auth'), indexRouter]);
 app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler

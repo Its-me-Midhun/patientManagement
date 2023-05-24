@@ -5,7 +5,7 @@
   display: flex;
   /* flex-direction: column; */
   padding-top: 4%;
-  padding-bottom: 8%;
+  padding-bottom: 6%;
 }
 
 .cards-container {
@@ -14,6 +14,7 @@
   /* justify-content: space-between; */
   max-width: 16%;
   margin-bottom: 20px;
+  padding-top: 4%;
   margin-left: 10%;
   overflow-x: auto;
 }
@@ -60,6 +61,7 @@
   overflow-x: auto;
   margin-bottom: 10%;
   margin-left: 5%;
+  margin-top: 5%;
 }
 
 .neon-graph .recharts-legend-item-text {
@@ -87,6 +89,13 @@
 
 .history-item p {
   margin: 0;
+}
+
+.history-button {
+  width: 80%;
+  background-color: #6c63ff;
+  border: none;
+  border-radius: 20px;
 }
 
 .history-item p:first-child {

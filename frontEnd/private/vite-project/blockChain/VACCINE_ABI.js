@@ -9,6 +9,12 @@ const vaccineCertificationABI = [
     inputs: [
       {
         indexed: false,
+        internalType: 'string',
+        name: 'certificateNumber',
+        type: 'string',
+      },
+      {
+        indexed: false,
         internalType: 'bytes32',
         name: 'patientName',
         type: 'bytes32',
@@ -21,9 +27,9 @@ const vaccineCertificationABI = [
       },
       {
         indexed: false,
-        internalType: 'bytes32',
+        internalType: 'string',
         name: 'patientRegId',
-        type: 'bytes32',
+        type: 'string',
       },
       {
         indexed: false,
@@ -87,13 +93,18 @@ const vaccineCertificationABI = [
   {
     inputs: [
       {
-        internalType: 'uint256',
+        internalType: 'string',
         name: '',
-        type: 'uint256',
+        type: 'string',
       },
     ],
     name: 'certifications',
     outputs: [
+      {
+        internalType: 'string',
+        name: 'certificateNumber',
+        type: 'string',
+      },
       {
         internalType: 'bytes32',
         name: 'patientName',
@@ -105,9 +116,9 @@ const vaccineCertificationABI = [
         type: 'bytes32',
       },
       {
-        internalType: 'bytes32',
+        internalType: 'string',
         name: 'patientRegId',
-        type: 'bytes32',
+        type: 'string',
       },
       {
         internalType: 'bytes32',
@@ -151,6 +162,11 @@ const vaccineCertificationABI = [
   {
     inputs: [
       {
+        internalType: 'string',
+        name: 'certificateNumber',
+        type: 'string',
+      },
+      {
         internalType: 'bytes32',
         name: 'patientName',
         type: 'bytes32',
@@ -161,9 +177,9 @@ const vaccineCertificationABI = [
         type: 'bytes32',
       },
       {
-        internalType: 'bytes32',
+        internalType: 'string',
         name: 'patientRegId',
-        type: 'bytes32',
+        type: 'string',
       },
       {
         internalType: 'bytes32',
@@ -235,13 +251,18 @@ const vaccineCertificationABI = [
   {
     inputs: [
       {
-        internalType: 'bytes32',
-        name: '_patientUUID',
-        type: 'bytes32',
+        internalType: 'string',
+        name: '_certificateNumber',
+        type: 'string',
       },
     ],
-    name: 'verifyCertificateByPatientUUID',
+    name: 'verifyCertificateByCertificate', 
     outputs: [
+      {
+        internalType: 'string',
+        name: 'certificateNumber',
+        type: 'string',
+      },
       {
         internalType: 'bytes32',
         name: 'patientName',
@@ -253,9 +274,9 @@ const vaccineCertificationABI = [
         type: 'bytes32',
       },
       {
-        internalType: 'bytes32',
+        internalType: 'string',
         name: 'patientRegId',
-        type: 'bytes32',
+        type: 'string',
       },
       {
         internalType: 'bytes32',

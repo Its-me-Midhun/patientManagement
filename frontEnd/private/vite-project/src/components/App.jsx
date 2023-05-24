@@ -1,6 +1,12 @@
 import { useEffect, useState } from 'react';
 import Login from './login/login';
-import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
+import {
+  BrowserRouter,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+} from 'react-router-dom';
 import Navbar from './navbar/navbar';
 import SignupPage from './signUp/signUp';
 import HomePage from './Home/Home';
@@ -15,12 +21,19 @@ import VaccinationForm from './Vaccinations/Vaccinations';
 import ViewProfilePage from './Profile/Profile';
 import ChangePasswordPage from './changePassword/changePassword';
 import PatientForm from './Patientform/Patientform';
+import { setData } from '../api/service';
+import NotFound from './404/404';
+import ConsultationsPage from './consultationsListing/consultationsListing';
+import VaccinationsPage from './vaccinationListing/vaccinationListing';
 
 function App() {
+  const navigate = useNavigate();
+  const [checkToken, setcheckToken] = useState(false);
   const dispatch = useDispatch();
   const { successMessage, errorMessage, loader, designations } = useSelector(
     (state) => state.commonReducer
   );
+  const { pathname } = useLocation();
   useEffect(() => {
     if (successMessage) {
       toast.success(successMessage, {
@@ -57,11 +70,39 @@ function App() {
     dispatch(getProfile());
   }, []);
 
+  const GetProfile = async () => {
+    if (localStorage.getItem('accessTocken') === null) {
+      navigate('/');
+    } else {
+      const { data } = await setData('/auth/GetProfile', {
+        token: localStorage.getItem('accessTocken'),
+      });
+      console.log('data.success', data.success);
+
+      setcheckToken(data.success);
+      if (data.success) {
+        if (
+          pathname === '/' ||
+          pathname === '/login' ||
+          pathname === '/signUp'
+        ) {
+          navigate('/dashboard');
+        } else {
+          navigate(pathname);
+        }
+      } else {
+        navigate('/');
+      }
+    }
+  };
+  useEffect(() => {
+    GetProfile();
+  }, [localStorage.getItem('accessTocken')]);
   return (
     <div>
       <Toaster position="top-center" reverseOrder={false} />
       <div>
-        <Navbar />
+        <Navbar checkToken={checkToken} />
       </div>
       <div>
         <Routes>
@@ -88,6 +129,15 @@ function App() {
             exact
             path="/consultations"
             element={<ConsultationForm />}
+          ></Route>
+          <Route path="/*" element={<NotFound />}></Route>
+          <Route
+            path="/consultationsList"
+            element={<ConsultationsPage />}
+          ></Route>
+          <Route
+            path="/vaccinationsList"
+            element={<VaccinationsPage />}
           ></Route>
         </Routes>
       </div>
