@@ -1,0 +1,108 @@
+.dashboard-container {
+  background-color: #000;
+  color: #fff;
+  padding: 20px;
+  display: flex;
+  /* flex-direction: column; */
+  padding-top: 4%;
+  padding-bottom: 6%;
+}
+
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  /* justify-content: space-between; */
+  max-width: 16%;
+  margin-bottom: 20px;
+  padding-top: 4%;
+  margin-left: 10%;
+  overflow-x: auto;
+}
+
+.card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 200px;
+  padding: 20px;
+  background-color: #6c63ff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease-in-out;
+  flex-shrink: 0;
+  margin-bottom: 5%;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.card h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #fff;
+}
+
+.card p {
+  font-size: 24px;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 0;
+  margin: 0 auto;
+}
+
+.chart-container {
+  width: 100%;
+  max-width: 100%;
+  background-color: #000;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  overflow-x: auto;
+  margin-bottom: 10%;
+  margin-left: 5%;
+  margin-top: 5%;
+}
+
+.neon-graph .recharts-legend-item-text {
+  fill: #6c63ff !important;
+}
+
+.history-container {
+  background-color: #000;
+  border-radius: 10px;
+  padding: 20px;
+  flex-basis: 20%;
+  margin-left: auto;
+  margin-left: 10%;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+  transition: transform 0.3s ease;
+}
+.history-container:hover {
+  transform: translateY(-10px);
+}
+.history-item {
+  margin-bottom: 10px;
+  border-bottom: 1px solid #6c63ff;
+  padding-bottom: 10px;
+}
+
+.history-item p {
+  margin: 0;
+}
+
+.history-button {
+  width: 80%;
+  background-color: #6c63ff;
+  border: none;
+  border-radius: 20px;
+}
+
+.history-item p:first-child {
+  font-weight: bold;
+  font-size: 1.3rem;
+}
+
+.history-item p:last-child {
+  text-align: right;
+}

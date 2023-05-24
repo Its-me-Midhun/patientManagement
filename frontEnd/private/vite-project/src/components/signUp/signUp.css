@@ -1,0 +1,128 @@
+* {
+  font-family: 'Josefin Sans', sans-serif;
+  font-family: 'Righteous', cursive;
+}
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0);
+  padding: 30px;
+  box-sizing: border-box;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #222;
+}
+
+.login-image img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.login-form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 70%;
+  margin-top: 20px;
+}
+
+.LoginHead {
+  font-size: 50px;
+  margin-bottom: 30px;
+  color: #fff;
+  text-align: center;
+}
+
+.formHead {
+  width: 48%;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.formHead label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #fff;
+}
+
+.input-field {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #1b1b1b;
+  font-size: 16px;
+  transition: border-color 0.3s;
+  background-color: #fff;
+  border-radius: 10px;
+  height: 6vh;
+  color: #fffefe;
+  background-color: black;
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: #6c63ff;
+}
+
+.error {
+  color: red;
+  margin-top: 5px;
+}
+
+.submit-button-signup {
+  width: 48%;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  background-color: #6c63ff;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 20px;
+  animation: bounce 0.5s infinite;
+}
+
+@keyframes bounce {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.submit-button-signup:hover {
+  background-color: #4f4aff;
+  animation: none;
+}
+
+.submit-button-signup:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.submit-button-signup:active {
+  transform: scale(0.95);
+}
+
+.submit-button-signup:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #6c63ff;
+}
+
+@media (max-width: 768px) {
+  .login-container {
+    width: 80%;
+  }
+}
